@@ -1,0 +1,59 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "findA",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"BookStore.sol": "B"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"BookStore.sol": {
+			"keccak256": "0x9cc8c4ae30ecf8431ca56d01dd1af0f7c44a1c9b4b6d7683996908b574b672cb",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://63bf61c7fad03275c0ab478494e5b663fd0c265d0d9eda630e453dc90bca0035",
+				"dweb:/ipfs/QmaAh1R3uS12Fg4jGv25iuksSAE3L9qWQkMvThZ6qFGQ9F"
+			]
+		}
+	},
+	"version": 1
+}
