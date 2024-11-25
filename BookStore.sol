@@ -35,6 +35,7 @@ pragma solidity ^0.8.2;
 // create a discount contract - two functions - setDiscount(either fixed or percentage), getDiscountedPrice
 // use the points for the discount -
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract A{
     function findA() public  pure virtual returns (string memory){
@@ -46,9 +47,7 @@ contract B is A{
         return "contract B";
     }
 }
-contract BookStore {
-
-    address public owner;
+contract BookStore  is Ownable{
 
     struct Book {
         string title;
@@ -59,23 +58,22 @@ contract BookStore {
     }
 
     mapping(uint256 => Book) public books;
+    mapping (address => bool ) public subscribers;
+
 
     uint256[] public bookIds;
+    address[] public  subscriberList;
 
     event BookAdded(uint256 indexed bookId, string title, string author, uint256 price, uint256 stock);
-    event BookPurchased(uint256 indexed bookId, address indexed buyer, uint256 quantity);
+    event PurchaseInitiated(uint256 indexed bookId, address indexed buyer, uint256 quantity);
+    event PurchaseConfirmed(uint256 indexed bookId, address indexed buyer, uint256 quantity);
+    event SubscriptionAdded(address indexed subscriber);
+    event SubscriptionRemoved(address indexed subscriber);
    
-    // Modifier to allow only the owner to perform certain actions
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Only the owner can perform this action.");
-        _;
-    }
+    constructor(address initialOwner) Ownable(initialOwner) {
+        }
 
-     constructor(address _owner) {
-        owner = _owner;
-     }
-
-     function addBook(uint256 _bookId, string memory _title, string memory _author, uint256 _price, uint256 _stock) public onlyOwner {
+    function addBook(uint256 _bookId, string memory _title, string memory _author, uint256 _price, uint256 _stock) public  onlyOwner{
         require(books[_bookId].price == 0, "Book already exists with this ID.");
         books[_bookId] = Book({
             title: _title,
@@ -97,17 +95,21 @@ contract BookStore {
         Book storage book = books[_bookId];
         require(book.isAvailable, "This book is not available.");
         require(book.stock >= _quantity, "Not enough stock available.");
-        require(_amount == book.price * _quantity, "Incorrect payment amount.");
+        uint totalPrice = book.price * _quantity;
 
-        // Decrease stock and update availability
-        book.stock -= _quantity;
-        if (book.stock == 0) {
-            book.isAvailable = false;
-        }
+        require(msg.value == totalPrice, " Incorrect payment amount");
 
         // Transfer payment to the owner - paybale == transfer(from, to, amount)
-        payable(owner).transfer(msg.value);
-        emit BookPurchased(_bookId, msg.sender, _quantity);
+        emit PurchaseInitiated(_bookId, msg.sender, _quantity);
+    }
+    function confirmPurchase(uint256 _bookId, uint256 _quantity)public onlyOwner{
+        Book storage book = books[_bookId];
+        require(book.stock >= _quantity,"not enought stock to confirm purchase");        
+        book.stock -=_quantity;
+        if (book.stock == 0){
+            book.isAvailable = false;
+        }
+        emit PurchaseConfirmed(_bookId, msg.sender, _quantity);
     }
 
 }

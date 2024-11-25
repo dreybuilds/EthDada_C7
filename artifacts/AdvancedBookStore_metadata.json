@@ -362,12 +362,28 @@
 		"remappings": []
 	},
 	"sources": {
+		"@openzeppelin/contracts/access/Ownable.sol": {
+			"keccak256": "0xff6d0bb2e285473e5311d9d3caacb525ae3538a80758c10649a4d61029b017bb",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8ed324d3920bb545059d66ab97d43e43ee85fd3bd52e03e401f020afb0b120f6",
+				"dweb:/ipfs/QmfEckWLmZkDDcoWrkEvMWhms66xwTLff9DDhegYpvHo1a"
+			]
+		},
+		"@openzeppelin/contracts/utils/Context.sol": {
+			"keccak256": "0x493033a8d1b176a037b2cc6a04dad01a5c157722049bbecf632ca876224dd4b2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6a708e8a5bdb1011c2c381c9a5cfd8a9a956d7d0a9dc1bd8bcdaf52f76ef2f12",
+				"dweb:/ipfs/Qmax9WHBnVsZP46ZxEMNRQpLQnrdE4dK8LehML1Py8FowF"
+			]
+		},
 		"AdvancedBookStore.sol": {
-			"keccak256": "0xe2e7a424d155f33d09267bf6b2a24af28cd36972cbc7b963ce9ae2db23e6e21e",
+			"keccak256": "0x861c07c577e74a3b6410b7f5ebe78b1b87fbd691991d32582fe4845defe1cb7b",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://ed354543cd1280ed2587b4bfaa3d06ecdd4c7a43ab00dfa88ec3e19207360374",
-				"dweb:/ipfs/QmXY8FSJJfWfhyndF1AAuuVZimuqBC1WWjuGySrhsuhu8Z"
+				"bzz-raw://0fe2ec68fe0a6e92fdb5aa47ec18d4c774e69dc77cdc644ef6b9d2baa883c53c",
+				"dweb:/ipfs/QmQPzKRqjMZP4iEPyD556Rh8Da8bJan6AZBwZExSkQBzkh"
 			]
 		},
 		"BookStore.sol": {
