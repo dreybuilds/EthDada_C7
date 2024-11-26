@@ -99,6 +99,8 @@ contract BookStore  is Ownable{
 
         uint totalPrice = book.price  * (_quantity / 10**18) ;
         require(msg.value == totalPrice , " Incorrect payment amount");
+        require(msg.value <= totalPrice , " Overpaid for book purchase");
+
         // return (_quantity/ 10**18, msg.value , totalPrice );
 
         // // Transfer payment to the owner - paybale == transfer(from, to, amount)

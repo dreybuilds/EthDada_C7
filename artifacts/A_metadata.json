@@ -63,11 +63,11 @@
 			]
 		},
 		"BookStore.sol": {
-			"keccak256": "0x714fa7c3ab47e505895a95daaf2dc8513b91530a08527e0335a521ab0f786425",
+			"keccak256": "0x53166398db51ebcc98e7d96419daab10f4844eeb8cbd5454d3f9d8273e20d12c",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://4afafd8d4b670784e4da3d4b49fc68ee9538910ae37f6e77ce0b6f6a7b1ec8fe",
-				"dweb:/ipfs/QmW6rotfTzd2oqN4C5dhEwBNtzJiyxx6UtAhwYXCbuim4X"
+				"bzz-raw://287086bbb1b7bee07a567718789bd560912bfcc9d3c45729b968fb444516baa0",
+				"dweb:/ipfs/QmTbesBoz4E4CGx85eiqzTP1FYHFWKCwCrCzgM9HKv4MZG"
 			]
 		}
 	},
