@@ -272,11 +272,6 @@
 						"internalType": "uint256",
 						"name": "_quantity",
 						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_amount",
-						"type": "uint256"
 					}
 				],
 				"name": "buyBook",
@@ -479,11 +474,11 @@
 			]
 		},
 		"BookStore.sol": {
-			"keccak256": "0x2c93ed32782da38783945e2d523bd95cfe139b95a631ea995bcd1b0d2821655b",
+			"keccak256": "0x714fa7c3ab47e505895a95daaf2dc8513b91530a08527e0335a521ab0f786425",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://6b1b6c5014687a4375b29b840b8b841fdbbb4087f070444a9449e57394544a5b",
-				"dweb:/ipfs/QmNNDkbVfk6PSFD5oJehKFmwpw3QkRi8YCYFDUAGMaPf2Z"
+				"bzz-raw://4afafd8d4b670784e4da3d4b49fc68ee9538910ae37f6e77ce0b6f6a7b1ec8fe",
+				"dweb:/ipfs/QmW6rotfTzd2oqN4C5dhEwBNtzJiyxx6UtAhwYXCbuim4X"
 			]
 		}
 	},

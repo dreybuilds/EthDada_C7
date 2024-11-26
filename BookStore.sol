@@ -83,7 +83,7 @@ contract BookStore  is Ownable{
             isAvailable: _stock > 0
         });
         bookIds.push(_bookId); // push() , remove()
-        emit BookAdded(_bookId, _title, _author, _price, _stock);
+        emit BookAdded(_bookId, _title, _author, _price*(10**18), _stock);
     }
    
     function getBooks(uint256 _bookId) public view returns (string memory, string memory, uint256, uint256, bool) {
@@ -91,16 +91,19 @@ contract BookStore  is Ownable{
         return (book.title, book.author, book.price, book.stock, book.isAvailable);
     }
 
-    function buyBook(uint256 _bookId, uint256 _quantity, uint256 _amount) public payable {
+    //quantity should be a whole integer 
+    function buyBook(uint256 _bookId, uint256 _quantity) public payable{
         Book storage book = books[_bookId];
         require(book.isAvailable, "This book is not available.");
         require(book.stock >= _quantity, "Not enough stock available.");
-        uint totalPrice = book.price * _quantity;
 
-        require(msg.value == totalPrice, " Incorrect payment amount");
+        uint totalPrice = book.price  * (_quantity / 10**18) ;
+        require(msg.value == totalPrice , " Incorrect payment amount");
+        // return (_quantity/ 10**18, msg.value , totalPrice );
 
-        // Transfer payment to the owner - paybale == transfer(from, to, amount)
+        // // Transfer payment to the owner - paybale == transfer(from, to, amount)
         emit PurchaseInitiated(_bookId, msg.sender, _quantity);
+        payable (owner()).transfer(msg.value);
     }
     function confirmPurchase(uint256 _bookId, uint256 _quantity)public onlyOwner{
         Book storage book = books[_bookId];
