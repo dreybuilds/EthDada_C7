@@ -65,8 +65,8 @@ contract BookStore  is Ownable{
     address[] public  subscriberList;
 
     event BookAdded(uint256 indexed bookId, string title, string author, uint256 price, uint256 stock);
-    event PurchaseInitiated(uint256 indexed bookId, address indexed buyer, uint256 quantity);
-    event PurchaseConfirmed(uint256 indexed bookId, address indexed buyer, uint256 quantity);
+    event PurchaseInitiated(uint256 indexed bookId, address indexed buyer,address indexed seller, uint256 quantity);
+    event PurchaseConfirmed(uint256 indexed bookId, address indexed buyer,address indexed seller, uint256 quantity);
     event SubscriptionAdded(address indexed subscriber);
     event SubscriptionRemoved(address indexed subscriber);
    
@@ -104,7 +104,7 @@ contract BookStore  is Ownable{
         // return (_quantity/ 10**18, msg.value , totalPrice );
 
         // // Transfer payment to the owner - paybale == transfer(from, to, amount)
-        emit PurchaseInitiated(_bookId, msg.sender, _quantity);
+        emit PurchaseInitiated(_bookId, msg.sender,owner(), _quantity);
         payable (owner()).transfer(msg.value);
     }
     function confirmPurchase(uint256 _bookId, uint256 _quantity)public onlyOwner{
@@ -114,7 +114,7 @@ contract BookStore  is Ownable{
         if (book.stock == 0){
             book.isAvailable = false;
         }
-        emit PurchaseConfirmed(_bookId, msg.sender, _quantity);
+        emit PurchaseConfirmed(_bookId, msg.sender, owner(), _quantity);
     }
 
 }
