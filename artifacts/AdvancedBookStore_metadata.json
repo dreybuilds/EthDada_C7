@@ -17,6 +17,28 @@
 				"type": "constructor"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "OwnableInvalidOwner",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "OwnableUnauthorizedAccount",
+				"type": "error"
+			},
+			{
 				"anonymous": false,
 				"inputs": [
 					{
@@ -74,21 +96,28 @@
 						"internalType": "uint256",
 						"name": "bookId",
 						"type": "uint256"
+					}
+				],
+				"name": "BookRemoved",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
 					},
 					{
 						"indexed": true,
 						"internalType": "address",
-						"name": "buyer",
+						"name": "newOwner",
 						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "quantity",
-						"type": "uint256"
 					}
 				],
-				"name": "BookPurchased",
+				"name": "OwnershipTransferred",
 				"type": "event"
 			},
 			{
@@ -99,9 +128,84 @@
 						"internalType": "uint256",
 						"name": "bookId",
 						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "seller",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "quantity",
+						"type": "uint256"
 					}
 				],
-				"name": "BookRemoved",
+				"name": "PurchaseConfirmed",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "bookId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "seller",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "quantity",
+						"type": "uint256"
+					}
+				],
+				"name": "PurchaseInitiated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "subscriber",
+						"type": "address"
+					}
+				],
+				"name": "SubscriptionAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "subscriber",
+						"type": "address"
+					}
+				],
+				"name": "SubscriptionRemoved",
 				"type": "event"
 			},
 			{
@@ -225,16 +329,29 @@
 						"internalType": "uint256",
 						"name": "_quantity",
 						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_amount",
-						"type": "uint256"
 					}
 				],
 				"name": "buyBook",
 				"outputs": [],
 				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_bookId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_quantity",
+						"type": "uint256"
+					}
+				],
+				"name": "confirmPurchase",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -333,11 +450,91 @@
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "subscriberList",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "subscribers",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
+			"errors": {
+				"OwnableInvalidOwner(address)": [
+					{
+						"details": "The owner is not a valid owner account. (eg. `address(0)`)"
+					}
+				],
+				"OwnableUnauthorizedAccount(address)": [
+					{
+						"details": "The caller account is not authorized to perform an operation."
+					}
+				]
+			},
 			"kind": "dev",
-			"methods": {},
+			"methods": {
+				"owner()": {
+					"details": "Returns the address of the current owner."
+				},
+				"renounceOwnership()": {
+					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
+				},
+				"transferOwnership(address)": {
+					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+				}
+			},
 			"version": 1
 		},
 		"userdoc": {
@@ -379,19 +576,19 @@
 			]
 		},
 		"AdvancedBookStore.sol": {
-			"keccak256": "0x861c07c577e74a3b6410b7f5ebe78b1b87fbd691991d32582fe4845defe1cb7b",
+			"keccak256": "0x90345d038a9d7ffdd529b24631f13efbe2baf39432cc14892e7d0246fe12059d",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://0fe2ec68fe0a6e92fdb5aa47ec18d4c774e69dc77cdc644ef6b9d2baa883c53c",
-				"dweb:/ipfs/QmQPzKRqjMZP4iEPyD556Rh8Da8bJan6AZBwZExSkQBzkh"
+				"bzz-raw://3b0fdbc9436632f2aa00e75c84d102d9e6b80fbd46143f33bea50693d5467c8e",
+				"dweb:/ipfs/QmUhoHrUHrjQ6vdPqP9QhaxUW44h4Nbe4bWNyjXxdhrxvW"
 			]
 		},
 		"BookStore.sol": {
-			"keccak256": "0x046e2ebc82a5034816f67032f079c15593dac8f6bb4c2839f973b472f69f60a4",
+			"keccak256": "0x3d19a3a95190b66920ca5b44efacfcd2624565dbd677449569aa991cdd02ef52",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://33dc8ee446a49f1b7cf1cb91f730ab868aac62f41e9d3fcb2fb4f5fcf39073be",
-				"dweb:/ipfs/QmZV7hx5jTL1jXSNAAziXySkUP1bjupY7nyWrqkQ4wcETL"
+				"bzz-raw://53fb2cfa2e16bf5770ba480781048b991c452f60c4e37f3be17c01156845571f",
+				"dweb:/ipfs/QmYrFXd8EfGmzxmJdfL48Y2kD5nTFXL9P96hoZwnwNXedp"
 			]
 		}
 	},

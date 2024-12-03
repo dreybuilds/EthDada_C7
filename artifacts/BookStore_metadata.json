@@ -218,6 +218,37 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "_user",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_points",
+						"type": "uint256"
+					}
+				],
+				"name": "addPoints",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_subscriber",
+						"type": "address"
+					}
+				],
+				"name": "addSubscription",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
@@ -349,6 +380,68 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_bookId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_points",
+						"type": "uint256"
+					}
+				],
+				"name": "getDiscountedPrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_user",
+						"type": "address"
+					}
+				],
+				"name": "getUserPoints",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "loyaltyPoints",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "owner",
 				"outputs": [
@@ -362,8 +455,39 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_subscriber",
+						"type": "address"
+					}
+				],
+				"name": "removeSubscription",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_bookId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_percentageDiscount",
+						"type": "uint256"
+					}
+				],
+				"name": "setDiscount",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -486,11 +610,11 @@
 			]
 		},
 		"BookStore.sol": {
-			"keccak256": "0x356be13bdbe7f6f998f48481cd731f5035517811a8305312ebd946c9f2f45011",
+			"keccak256": "0xa0d6ac78a698dd90cb92ba35d7aeb14a8acefd4ff35c72052896e085ad31b134",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://93b94b5a800d70c8fed0d5ea6f83ac537a14c59146923c72fddb61bbf64ff4f1",
-				"dweb:/ipfs/QmX4uGkp4aciRQRGGJF2hqGs88DVu9LHD9HMc9ZA6d1yfu"
+				"bzz-raw://b9ac6364a32ed78284390e607aef11d77b138db40dc3a0435b6c5f4143dd29f8",
+				"dweb:/ipfs/QmUrXdqNfBVFZtXgsbF9ATXgRCa1rKaKc3QR8DMn5yDuoF"
 			]
 		}
 	},

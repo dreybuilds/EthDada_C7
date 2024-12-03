@@ -37,16 +37,16 @@ pragma solidity ^0.8.2;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract A{
-    function findA() public  pure virtual returns (string memory){
-        return "contract A";
-    }
-}
-contract B is A{
-    function findA() public  pure virtual override returns (string memory){
-        return "contract B";
-    }
-}
+// contract A{
+//     function findA() public  pure virtual returns (string memory){
+//         return "contract A";
+//     }
+// }
+// contract B is A{
+//     function findA() public  pure virtual override returns (string memory){
+//         return "contract B";
+//     }
+// }
 contract BookStore  is Ownable{
 
     struct Book {
@@ -59,6 +59,7 @@ contract BookStore  is Ownable{
 
     mapping(uint256 => Book) public books;
     mapping (address => bool ) public subscribers;
+    mapping (address => uint256) public loyaltyPoints;
 
 
     uint256[] public bookIds;
@@ -106,7 +107,10 @@ contract BookStore  is Ownable{
         // // Transfer payment to the owner - paybale == transfer(from, to, amount)
         emit PurchaseInitiated(_bookId, msg.sender,owner(), _quantity);
         payable (owner()).transfer(msg.value);
+        // Add loyalty points for the buyer
+        loyaltyPoints[msg.sender] += _quantity * 10; // 10 points per book
     }
+
     function confirmPurchase(uint256 _bookId, uint256 _quantity)public onlyOwner{
         Book storage book = books[_bookId];
         require(book.stock >= _quantity,"not enought stock to confirm purchase");        
@@ -116,6 +120,48 @@ contract BookStore  is Ownable{
         }
         emit PurchaseConfirmed(_bookId, msg.sender, owner(), _quantity);
     }
+     function addSubscription(address _subscriber) public onlyOwner {
+        require(!subscribers[_subscriber], "Subscriber already exists.");
+        subscribers[_subscriber] = true;
+        subscriberList.push(_subscriber);
+        emit SubscriptionAdded(_subscriber);
+    }
+
+    function removeSubscription(address _subscriber) public onlyOwner {
+        require(subscribers[_subscriber], "Subscriber does not exist.");
+        subscribers[_subscriber] = false;
+        emit SubscriptionRemoved(_subscriber);
+    }
+
+    // Loyalty Program
+    function addPoints(address _user, uint256 _points) public onlyOwner {
+        loyaltyPoints[_user] += _points;
+    }
+
+    function getUserPoints(address _user) public view returns (uint256) {
+        return loyaltyPoints[_user];
+    }
+
+    // Discount Contract
+    function getDiscountedPrice(uint256 _bookId, uint256 _points)
+        public
+        view
+        returns (uint256)
+    {
+        Book memory book = books[_bookId];
+        uint256 discount = (_points >= 100) ? book.price / 10 : 0; // 10% discount for 100+ points
+        return book.price - discount;
+    }
+
+    function setDiscount(
+        uint256 _bookId,
+        uint256 _percentageDiscount
+    ) public onlyOwner {
+        require(_percentageDiscount <= 100, "Discount cannot exceed 100%");
+        Book storage book = books[_bookId];
+        uint256 discountAmount = (book.price * _percentageDiscount) / 100;
+        book.price -= discountAmount;
+    }   
 
 }
 
